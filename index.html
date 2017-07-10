@@ -56,7 +56,7 @@
 			
 				<li><a href="/">主页</a></li>
 	        
-				<li><a href="/tags/随笔/">随笔</a></li>
+				<li><a href="/">随笔</a></li>
 	        
 			</ul>
 		</nav>
@@ -130,7 +130,7 @@
 				
 					<li style="width: 50%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 50%"><a href="/">随笔</a></li>
 		        
 				</ul>
 			</nav>
@@ -146,180 +146,6 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-    <article id="post-Gradle一些碎片知识点" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/10/Gradle一些碎片知识点/">Gradle一些碎片知识点</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/10/Gradle一些碎片知识点/" class="archive-article-date">
-  	<time datetime="2017-07-10T06:51:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>gradle插件版本配置位置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        jcenter()</div><div class="line">    &#125;</div><div class="line">    dependencies &#123;</div><div class="line">        classpath &apos;com.android.tools.build:gradle:1.2.3&apos;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>gradle版本配置位置：<br>gradle-wrapper.properties 中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">distributionUrl=https\://services.gradle.org/distributions/gradle-2.2-all.zip</div></pre></td></tr></table></figure></p>
-<p>版本对应如图：</p>
-<table>
-<thead>
-<tr>
-<th>Plugin version</th>
-<th>Required Gradle version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1.0.0-1.1.3</td>
-<td>2.2.1-2.3</td>
-</tr>
-<tr>
-<td>1.2.0-1.3.1</td>
-<td>2.2.1-2.9</td>
-</tr>
-<tr>
-<td>1.5.0</td>
-<td>2.2.1-2.13</td>
-</tr>
-<tr>
-<td>2.0.0-2.1.2</td>
-<td>2.10-2.13</td>
-</tr>
-<tr>
-<td>2.13-2.2.3</td>
-<td>2.14.1+</td>
-</tr>
-<tr>
-<td>2.3.0+</td>
-<td>3.3+</td>
-</tr>
-</tbody>
-</table>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line">    dependencies &#123;</div><div class="line">        classpath &apos;com.android.tools.build:gradle:2.2.3&apos;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">allprojects &#123;</div><div class="line">    repositories &#123;</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>buildscript里是gradle脚本执行所需依赖，分别对应的maven库和插件</p>
-<p>allprojects里是项目本身需要的依赖</p>
-<h4 id="maven仓库"><a href="#maven仓库" class="headerlink" title="maven仓库"></a>maven仓库</h4><table>
-<thead>
-<tr>
-<th>类型</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Maven central repository</td>
-<td>Maven的中央仓库，无需配置，声明即可使用。不支持https协议访问</td>
-</tr>
-<tr>
-<td>Maven JCenter repository</td>
-<td>JCenter中央仓库，实际也是用maven搭建的，但相比Maven仓库更友好，通过CDN分发，并且支持https访问。</td>
-</tr>
-<tr>
-<td>Maven local repository</td>
-<td>Maven本地仓库，可以通过本地配置文件进行配置</td>
-</tr>
-<tr>
-<td>Maven repository</td>
-<td>常规的第三方Maven仓库，可设置访问Url</td>
-</tr>
-<tr>
-<td>Ivy repository</td>
-<td>Ivy仓库，可以是本地仓库，也可以是远程仓库</td>
-</tr>
-<tr>
-<td>Flat directory repository</td>
-<td>使用本地文件夹作为仓库</td>
-</tr>
-</tbody>
-</table>
-<h4 id="各种Maven仓库在gradle中的配置方法"><a href="#各种Maven仓库在gradle中的配置方法" class="headerlink" title="各种Maven仓库在gradle中的配置方法"></a>各种Maven仓库在gradle中的配置方法</h4><ul>
-<li><p>Maven central repository</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    mavenCentral()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>Maven JCenter repository</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    jcenter()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>指定仓库，指定链接使用。</p>
-<p>比如JCenter仓库是通过https访问的，如果想切换成http协议访问，修改配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    jcenter&#123;</div><div class="line">        url &quot;http://jcenter.bintray.com&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<ul>
-<li><p>Local Maven repository<br>-<br>可以使用Maven本地的仓库。默认情况下，本地仓库位于USER_HOME/.m2/repository（例如windows环境中，在C:\Users\NAME.m2.repository），同时可以通过USER_HOME/.m2/下的settings.xml配置文件修改默认路径位置。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    mavenLocal()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>Maven repository</p>
-</li>
-</ul>
-<p>第三方的配置也很简单，直接指明url即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    maven &#123;</div><div class="line">        url &quot;http://repo.mycompany.com/maven2&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<ul>
-<li><p>Ivy repository</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    ivy &#123;</div><div class="line">        url &quot;http:/repo.mycompany.com/repo&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>Flat directory repository<br>使用本地文件夹，这个也比较常用，直接在build.gradle中声明文件夹路径：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    flatDir &#123;</div><div class="line">        dirs &apos;lib&apos;</div><div class="line">    &#125;</div><div class="line">    flatDir &#123;</div><div class="line">        dirs &apos;lib1&apos;, &apos;lib2&apos;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>使用本地文件夹时，就不支持配置元数据格式的信息了（POM文件）。并且Gradle会优先使用服务器仓库中的库文件：例如时事声明了jcenter和flatDir，当flatDir中的库文件同样在jcenter中存在，gradle会优先使用jcenter的。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">gradle,repository,maven</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/10/Gradle一些碎片知识点/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
     <article id="post-Gradle配置优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -460,77 +286,6 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/10/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/10/hello-world/" class="archive-article-date">
-  	<time datetime="2017-07-10T01:22:57.151Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/10/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -622,10 +377,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">gradle,repository,maven</a>
-              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gradle</a>
